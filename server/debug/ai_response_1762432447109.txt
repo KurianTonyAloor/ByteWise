@@ -1,0 +1,29 @@
+{
+    "quiz": [
+        {
+            "question": "Which of the following best describes a hierarchical storage structure?",
+            "options": ["A. A system where data is stored only in main memory.", "B. Data and instructions are duplicated across multiple caches simultaneously.", "C. The same piece of data may appear at different levels, such as disk, cache, internal register, etc."],
+            "answer": "C"
+        },
+        {
+            "question": "What is the primary purpose of an operating system's I/O subsystem?",
+            "options": ["A. To manage user permissions and access control.", "B. To hide hardware peculiarities from users.", "C. To execute processes concurrently on multiple CPUs."],
+            "answer": "B"
+        },
+        {
+            "question": "What is cache coherency in a multiprocessor environment?",
+            "options": ["A. Ensuring that an update to the value of A in one register immediately reflects across all caches.", "B. Duplicating data for redundancy purposes.", "C. Managing free space on disk storage."],
+            "answer": "A"
+        },
+        {
+            "question": "Which mechanism is NOT typically considered an operating system function in terms of security?",
+            "options": ["A. Prevention of viruses and worms.", "B. Identity theft prevention.", "C. Defense against external attacks."],
+            "answer": "B"
+        },
+        {
+            "question": "In a distributed environment, how is data typically managed to ensure consistency?",
+            "options": ["A. By keeping copies of files on different computers and updating them as soon as possible.", "B. Through user permissions for each replica.", "C. Using only one centralized copy with no updates."],
+            "answer": "A"
+        }
+    ]
+}

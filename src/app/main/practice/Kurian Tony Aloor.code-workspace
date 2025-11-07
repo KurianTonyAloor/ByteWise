@@ -1,0 +1,18 @@
+{
+	"folders": [
+		{
+			"path": "../../../../../../.."
+		}
+	],
+	"launch": {
+		"version": "0.2.0",
+		"configurations": []
+	},
+	"settings": {
+		"files.associations": {
+			"array": "c",
+			"deque": "c",
+			"vector": "c"
+		}
+	}
+}

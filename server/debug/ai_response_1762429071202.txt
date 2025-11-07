@@ -1,0 +1,29 @@
+{
+    "quiz": [
+        {
+            "question": "Which of the following is NOT a characteristic of an operating system?",
+            "options": ["It manages hardware resources.", "It provides user interfaces.", "It allows multiple users to access shared resources simultaneously.", "It can only run one program at a time."],
+            "answer": "Option 4: It can only run one program at a time."
+        },
+        {
+            "question": "Which of the following is NOT considered when categorizing computer systems?",
+            "options": ["Single-Processor Systems", "Asymmetric multiprocessing", "Symmetric Multiprocessing (SMP)", "Quantum Computing"],
+            "answer": "Option 3: Quantum Computing"
+        },
+        {
+            "question": "Which of the following is a benefit of using clustered systems?",
+            "options": ["Increased throughput.", "Decreased reliability.", "Higher power consumption.", "Limited storage sharing."],
+            "answer": "Option 1: Increased throughput."
+        },
+        {
+            "question": "Which of the following is a characteristic of multi-tasking operating systems?",
+            "options": ["Allows multiple programs to run concurrently.", "Requires only one CPU for execution.", "Shares common processing resources among tasks.", "Does not support user interfaces."],
+            "answer": "Option 2: Requires only one CPU for execution."
+        },
+        {
+            "question": "Which of the following is NOT a type of operating system?",
+            "options": ["Single User, Single Task.", "Batch Processing System.", "Real-Time Operating Systems (RTOS).", "Distributed Systems"],
+            "answer": "Option 1: Real-Time Operating Systems (RTOS)"
+        }
+    ]
+}

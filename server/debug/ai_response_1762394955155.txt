@@ -1,0 +1,7 @@
+{
+
+    "title": "Advanced Bioinformatics and Biotechnology Research in India",
+
+    "introduction_date": "May-2023"
+
+}

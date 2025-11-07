@@ -1,0 +1,38 @@
+{
+    "quiz": [
+        {
+            "question": "Which of the following is NOT a function of an operating system?",
+            "options": ["Process Management", "Memory Management", "Protection and Security", "Data Analysis"],
+            "answer": "Data Analysis"
+        },
+        {
+            "question": "What does Process Scheduling in Operating Systems refer to?",
+            "options": [
+                "Allocating CPU time among processes based on priority.",
+                "Creating and deleting user accounts within the system.",
+                "Managing network traffic between different computers."
+            ],
+            "answer": "Allocating CPU time among processes based on priority."
+        },
+        {
+            "question": "What is a Cache in terms of computer memory?",
+            "options": [
+                "A backup storage for files.",
+                "An extremely fast type of memory that holds frequently requested data and instructions to reduce access times from main memory.",
+                "The primary long-term storage device where all programs are stored."
+            ],
+            "answer": "An extremely fast type of memory that holds frequently requested data and instructions to reduce access times from main memory."
+        },
+        {
+            "question": "Which system architecture allows multiple CPUs or processors to operate concurrently?",
+            "options": [
+                "Single-Processor Systems",
+                "Multiprocessor Systems",
+                "Clustered Systems"
+            ],
+            "answer": "Multiprocessor Systems"
+        },
+        {
+            "question": "What is the purpose of a File System in an Operating System?',  'options': [  'To provide mechanisms for process synchronization.', 'To manage how files are stored and retrieved on disk storage devices.','To ensure that all processes have equal access to CPU time.'],   'answer': "
+            }]
+    }

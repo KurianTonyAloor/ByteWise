@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Gemini API Tester</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700&display=swap');
+    body { font-family: 'Inter', sans-serif; }
+  </style>
+</head>
+<body class="bg-gray-900 text-gray-200 flex items-center justify-center min-h-screen">
+
+  <div class="w-full max-w-2xl mx-auto p-8 bg-gray-800 rounded-lg shadow-lg">
+    <div class="text-center mb-6">
+      <h1 class="text-3xl font-bold text-white">Gemini API Test</h1>
+      <p class="text-gray-400 mt-2">Select a model, enter your API key & prompt, and test.</p>
+    </div>
+    
+    <div class="mb-6">
+      <label for="apiKey" class="block text-sm font-medium text-gray-300">API Key</label>
+      <input type="password" id="apiKey" class="mt-1 block w-full bg-gray-700 border-gray-600 rounded-md p-2 text-white" placeholder="Enter API key" />
+    </div>
+    
+    <div class="mb-6">
+      <button id="load-models" class="bg-indigo-600 hover:bg-indigo-700 text-white px-4 py-2 rounded">Load Models</button>
+    </div>
+  
+    <div id="model-container" class="mb-6 hidden">
+      <label for="modelSelect" class="block text-sm font-medium text-gray-300">Available Models</label>
+      <select id="modelSelect" class="mt-1 block w-full bg-gray-700 border-gray-600 rounded-md p-2 text-white"></select>
+    </div>
+    
+    <form id="gemini-form" class="space-y-6">
+      <div>
+        <label for="prompt" class="block text-sm font-medium text-gray-300">Prompt</label>
+        <textarea id="prompt" rows="4" class="mt-1 block w-full bg-gray-700 border-gray-600 rounded-md p-2 text-white" placeholder="Type something…"></textarea>
+      </div>
+      <div>
+        <button type="submit" class="w-full bg-indigo-600 hover:bg-indigo-700 text-white py-2 rounded">Send Request</button>
+      </div>
+    </form>
+    
+    <div id="result-container" class="mt-8">
+      <h2 class="text-xl font-bold text-white mb-4">Response</h2>
+      <div id="loading" class="hidden flex items-center space-x-2 text-gray-400">
+        <svg class="animate-spin h-5 w-5 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+          <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
+          <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+        </svg>
+        <span>Waiting for response...</span>
+      </div>
+      <pre id="response-text" class="bg-gray-900 rounded-md p-4 text-sm whitespace-pre-wrap break-words"></pre>
+    </div>
+  </div>
+
+  <script>
+    const apiKeyInput = document.getElementById('apiKey');
+    const loadModelsBtn = document.getElementById('load-models');
+    const modelContainer = document.getElementById('model-container');
+    const modelSelect = document.getElementById('modelSelect');
+    const form = document.getElementById('gemini-form');
+    const promptInput = document.getElementById('prompt');
+    const loadingDiv = document.getElementById('loading');
+    const responseText = document.getElementById('response-text');
+
+    // Load available models for this API key
+    loadModelsBtn.addEventListener('click', async () => {
+      const apiKey = apiKeyInput.value.trim();
+      if (!apiKey) {
+        alert('Please enter your API key first.');
+        return;
+      }
+      try {
+        const url = `https://generativelanguage.googleapis.com/v1beta/models?key=${apiKey}`;
+        const resp = await fetch(url);
+        const j = await resp.json();
+        if (!resp.ok) {
+          throw new Error(`[${j.error.code} ${j.error.status}] ${j.error.message}`);
+        }
+        const models = j.models || [];
+        // Filter models that support generateContent
+        const genModels = models.filter(m => m.supportedGenerationMethods?.includes('generateContent'));
+        modelSelect.innerHTML = genModels.map(m => `<option value="${m.name}">${m.name}</option>`).join('');
+        if (genModels.length === 0) {
+          alert('No models available that support generateContent.');
+        } else {
+          modelContainer.classList.remove('hidden');
+        }
+      } catch (err) {
+        console.error('ListModels error:', err);
+        alert('Error loading models: ' + err.message);
+      }
+    });
+
+    // Form submit to call generateContent
+    form.addEventListener('submit', async (e) => {
+      e.preventDefault();
+      const apiKey = apiKeyInput.value.trim();
+      const prompt = promptInput.value.trim();
+      const modelName = modelSelect.value;
+
+      if (!apiKey || !prompt) {
+        responseText.textContent = 'Please provide both API key and prompt.';
+        responseText.classList.add('text-red-400');
+        return;
+      }
+      if (!modelName) {
+        responseText.textContent = 'Please load and select a model first.';
+        responseText.classList.add('text-red-400');
+        return;
+      }
+
+      loadingDiv.classList.remove('hidden');
+      responseText.textContent = '';
+      responseText.classList.remove('text-red-400', 'text-green-400');
+
+      const url = `https://generativelanguage.googleapis.com/v1beta/${modelName}:generateContent?key=${apiKey}`;
+      const payload = {
+        contents: [
+          { parts: [ { text: prompt } ] }
+        ]
+      };
+
+      try {
+        const resp = await fetch(url, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(payload)
+        });
+        const j = await resp.json();
+        if (!resp.ok) {
+          throw new Error(`[${j.error.code} ${j.error.status}] ${j.error.message}`);
+        }
+        const text = j?.candidates?.[0]?.content?.parts
+          ?.map(p => p.text || '')
+          .join('\n')
+          .trim()
+          || 'No response text found.';
+        responseText.textContent = text;
+        responseText.classList.add('text-green-400');
+      } catch (err) {
+        console.error('GenerateContent error:', err, err.stack);
+        responseText.textContent = `Error: ${err.message}`;
+        responseText.classList.add('text-red-400');
+      } finally {
+        loadingDiv.classList.add('hidden');
+      }
+    });
+  </script>
+
+</body>
+</html>
