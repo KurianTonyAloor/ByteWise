@@ -174,3 +174,18 @@ npm run dev
 \# Your frontend is now running on http://localhost:5173
 
 You can now open http://localhost:5173 in your browser and use the application.
+
+
+
+ByteWise is licensed under the AGPL-3.0 License.
+
+All original ideas, including the heuristic retrieval engine (“Internet-Eye”),
+local PHI-3 LLM integration design, academic decision pipeline,
+attendance/mark prediction logic, and system architecture
+are the intellectual property of the author, Kurian Tony A.
+
+You may use, modify, and redistribute this software only under the terms of AGPL-3.0.
+Any commercial use, closed-source modification, proprietary hosting,
+or redistribution without releasing source code is strictly prohibited.
+
+This ensures that ByteWise remains free, open, and community-driven.
